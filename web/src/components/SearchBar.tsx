@@ -50,7 +50,6 @@ export const SearchBar: FunctionComponent<Props> = (props: Props) => {
             aria-label="wallet address"
             label="Wallet Address"
             variant="outlined"
-            defaultValue="0x"
             onChange={handleChange}
             onInput={validateInput}
             error={error}

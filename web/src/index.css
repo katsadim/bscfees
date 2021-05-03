@@ -1,0 +1,7 @@
+/* hack so that footer is sent to the bottom https://jordanwarren.dev/full-window-height-pages-in-gatsby */
+html,
+body,
+#___gatsby,
+#gatsby-focus-wrapper {
+    height: 99%;
+}

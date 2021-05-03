@@ -1,0 +1,19 @@
+.idea
+*.iml
+.DS_*
+
+# Api
+api/bsc-fees
+api/bsc-fees.zip
+
+# Web
+web/node_modules
+web/.cache
+web/public
+
+# Terraform
+tf/.terraform
+tf/.terraform.lock.hcl
+tf/terraform.tfstate
+tf/terraform.tfstate.backup
+crash.log

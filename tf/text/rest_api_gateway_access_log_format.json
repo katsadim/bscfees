@@ -1,0 +1,1 @@
+{ "requestId": "$context.requestId", "ip": "$context.identity.sourceIp", "requestTime": "$context.requestTime", "status": "$context.status" }

@@ -1,0 +1,50 @@
+{
+  "name": "bsc-fees",
+  "version": "1.0.0",
+  "private": true,
+  "description": "bsc-fees",
+  "author": "akatsadimas",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "lint": "eslint ./src --ext .ts,tsx",
+    "clean": "gatsby clean",
+    "deploy_invalidate": "gatsby-plugin-s3 deploy --yes && aws cloudfront create-invalidation --distribution-id EXAMPLEDISTRIBUTIONID --paths \"/*\"",
+    "deploy": "gatsby-plugin-s3 deploy --yes"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
+    "@material-ui/core": "^5.0.0-alpha.29",
+    "@material-ui/icons": "^4.11.2",
+    "gatsby": "^3.2.1",
+    "gatsby-plugin-canonical-urls": "^3.3.0",
+    "gatsby-plugin-google-gtag": "^3.3.0",
+    "gatsby-plugin-manifest": "^3.2.0",
+    "gatsby-plugin-offline": "^4.3.0",
+    "gatsby-plugin-react-helmet": "^4.2.0",
+    "gatsby-plugin-s3": "^0.3.8",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@types/node-fetch": "^2.5.10",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-helmet": "^6.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.25.0",
+    "eslint-plugin-react": "^7.23.2",
+    "install": "^0.13.0",
+    "npm": "^7.9.0",
+    "typescript": "^4.2.4"
+  }
+}

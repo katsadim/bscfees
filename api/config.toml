@@ -1,0 +1,29 @@
+[httpClient]
+# Specifies a time limit for requests made by the http client
+timeout = "60s"
+keepAlive = true
+
+[bsc]
+baseUri = "https://api.bscscan.com/api"
+module = "account"
+action = "txlist"
+apiKey = "API key generated in bscscan.com"
+# if rate limit is set to 5 and rateLimitDuration is set to 1s this mean 5reqs/sec
+rateLimit = 5
+rateLimitPeriod = "1s"
+
+[binance]
+baseUri = "https://api.binance.com"
+candlesEndpoint = "/api/v3/klines"
+currentPriceEndpoint = "/api/v3/avgPrice"
+apiKey = "API key generated in binance.com"
+currencySymbol = "BNBUSDT"
+# if rate limit is set to 1200 and rateLimitDuration is set to 1m this mean 1200reqs/min
+rateLimit = 1200
+rateLimitDuration = "1m"
+
+[options]
+currency = "EUR"
+
+[general]
+env = "dev"

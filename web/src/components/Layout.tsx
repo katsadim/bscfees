@@ -6,6 +6,7 @@ import {BscScanIcon} from "./icons/BscScanIcon";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import "../index.css";
 import {OutboundLink} from "gatsby-plugin-google-gtag";
+import {EthScanIcon} from "./icons/EthScanIcon";
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -33,6 +34,15 @@ const Copyright: FunctionComponent = () => {
             </Grid>
             <Grid container item justifyContent="center" alignItems={"flex-start"} alignContent={"center"}>
                 <Grid item/>
+                <Grid item>
+                    <Tooltip title="EthScan">
+                        <OutboundLink href="https://www.ethscan.com">
+                            <IconButton aria-label="ethscan" onClick={() => window.open('https://www.ethscan.com')}>
+                                <EthScanIcon width={20} height={20} style={{fontSize: 10}}/>
+                            </IconButton>
+                        </OutboundLink>
+                    </Tooltip>
+                </Grid>
                 <Grid item>
                     <Tooltip title="BscScan">
                         <OutboundLink href="https://www.bscscan.com">

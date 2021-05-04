@@ -15,7 +15,7 @@ type client struct {
 	cfg    config.HTTPClient
 }
 
-// NewClient creates a new BSC compatible client
+// NewClient creates a new Bsc/Eth compatible client
 func NewClient(cfg config.Config) Client {
 	c := http.Client{
 		Timeout: cfg.HttpClient.Timeout,

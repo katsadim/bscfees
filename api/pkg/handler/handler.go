@@ -48,7 +48,7 @@ func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProx
 	result, err := pkg.NewOperator(ctx, cfg).Calculate(address)
 	if err != nil {
 		log.Error("Something went terribly wrong: %w", err)
-		errResp := NewInternalError("binance/BSC error")
+		errResp := NewInternalError("binance/BSC/ETH error")
 		return errorInAPIGatewayProxyResponse(*errResp, corsHeaders)
 	}
 

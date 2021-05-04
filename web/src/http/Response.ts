@@ -1,4 +1,6 @@
 export interface Fees {
     bnbusdPrice: number
-    fees: number
+    ethusdPrice: number
+    bscFees: number
+    ethFees: number
 }

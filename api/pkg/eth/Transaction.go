@@ -1,4 +1,4 @@
-package bsc
+package eth
 
 import (
 	"math/big"

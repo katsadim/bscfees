@@ -52,7 +52,7 @@ func Test_binanceService_GetCurrencyRate_Responses(t *testing.T) {
 				&http.Response{Body: file, StatusCode: http.StatusOK},
 				nil)
 
-			got, err := s.GetCurrencyRates(tt.times)
+			got, err := s.GetCurrencyRates(tt.times, "BNBBUSD")
 
 			if !assert.Equal(t, tt.wantErr, err != nil, "Want error: "+strconv.FormatBool(tt.wantErr)) && err != nil {
 				assert.Nil(t, err)

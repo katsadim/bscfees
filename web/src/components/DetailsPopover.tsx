@@ -6,12 +6,13 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
 type Props = {
     bnbusdPrice: number
+    ethusdPrice: number
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         typography: {
-            padding: theme.spacing(2),
+            padding: theme.spacing(1),
         },
     }),
 );
@@ -50,7 +51,8 @@ export const DetailsPopover: FunctionComponent<Props> = (props: Props) => {
                     horizontal: 'center',
                 }}
             >
-                <Typography className={classes.typography}>Current BNB/USD price: {props.bnbusdPrice}</Typography>
+                <Typography className={classes.typography}>Current BNB/BUSD price: {props.bnbusdPrice}</Typography>
+                <Typography className={classes.typography}>Current ETH/BUSD price: {props.ethusdPrice}</Typography>
             </Popover>
         </div>
 

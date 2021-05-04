@@ -41,8 +41,10 @@ const Index: FunctionComponent = () => {
     const [searchSuccess, setSearchSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
-    const [fees, setFees] = React.useState(0.0);
+    const [bscFees, setBscFees] = React.useState(0.0);
+    const [ethFees, setEthFees] = React.useState(0.0);
     const [bnbusdPrice, setBnbUsdPrice] = React.useState(0.0);
+    const [ethusdPrice, setEthUsdPrice] = React.useState(0.0);
 
     const performSearch = (searchTerm: string): void => {
         const error = validateSearchTerm(searchTerm);
@@ -56,8 +58,10 @@ const Index: FunctionComponent = () => {
         setSearchSuccess(false)
         api<Fees>(`fees?address=${searchTerm}`)
             .then((f) => {
-                setFees(f.fees)
+                setBscFees(f.bscFees)
+                setEthFees(f.ethFees)
                 setBnbUsdPrice(f.bnbusdPrice)
+                setEthUsdPrice(f.ethusdPrice)
                 setSearchSuccess(true)
             })
             .catch(error => {
@@ -90,7 +94,7 @@ const Index: FunctionComponent = () => {
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <Layout>
-                    <Grid container spacing={4} justifyContent="center" className={classes.linearProgress}>
+                        <Grid container spacing={4} justifyContent="center" className={classes.linearProgress}>
                         <Grid container item xs={12} justifyContent="center">
                             <Typography variant="h4" component="h1" gutterBottom>
                                 BscFees
@@ -112,7 +116,11 @@ const Index: FunctionComponent = () => {
                         </Grid>
 
                         <Grid container item xs={12} justifyContent="center" zeroMinWidth>
-                            {searchSuccess ? <ResultCard bnbusdPrice={bnbusdPrice} fees={fees} numOfDecimals={4}/> : <></>}
+                            {searchSuccess ? <ResultCard bnbusdPrice={bnbusdPrice}
+                                                         ethusdPrice={ethusdPrice}
+                                                         bscFees={bscFees}
+                                                         ethFees={ethFees}
+                                                         numOfDecimals={4}/> : <></>}
                         </Grid>
                     </Grid>
                 </Layout>

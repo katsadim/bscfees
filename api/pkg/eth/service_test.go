@@ -1,4 +1,4 @@
-package bsc
+package eth
 
 import (
 	"bsc-fees/pkg/config"
@@ -58,9 +58,9 @@ func Test_service_GetAccountTransactions_Responses(t *testing.T) {
 			require.Nil(t, err)
 
 			mockClient := new(net.MockClient)
-			s := NewBscService(
+			s := NewProviderService(
 				mockClient,
-				config.BSC{},
+				config.Provider{},
 			)
 
 			mockClient.On(
@@ -84,9 +84,9 @@ func Test_service_GetAccountTransactions_Responses(t *testing.T) {
 
 func Test_service_GetAccountTransactions_InvalidRequest(t *testing.T) {
 	mockClient := new(net.MockClient)
-	s := NewBscService(
+	s := NewProviderService(
 		mockClient,
-		config.BSC{},
+		config.Provider{},
 	)
 
 	mockClient.On(

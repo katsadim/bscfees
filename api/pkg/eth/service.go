@@ -1,4 +1,4 @@
-package bsc
+package eth
 
 import (
 	"bsc-fees/pkg/config"
@@ -12,24 +12,24 @@ import (
 	"strings"
 	"time"
 )
-
+// This service can be used for both bscscan and ethscan
 type TxGetter interface {
 	GetAccountTransactions(account string) ([]Transaction, error)
 }
 
-type bscService struct {
+type providerService struct {
 	client net.Client
-	cfg    config.BSC
+	cfg    config.Provider
 }
 
-func NewBscService(c net.Client, cfg config.BSC) TxGetter {
-	return &bscService{
+func NewProviderService(c net.Client, cfg config.Provider) TxGetter {
+	return &providerService{
 		client: c,
 		cfg:    cfg}
 }
 
-func (s *bscService) GetAccountTransactions(address string) ([]Transaction, error) {
-	u, err := url.Parse(synthesizeBSCUri(s.cfg, address))
+func (s *providerService) GetAccountTransactions(address string) ([]Transaction, error) {
+	u, err := url.Parse(synthesizeProviderUri(s.cfg, address))
 	if err != nil {
 		return []Transaction{}, err
 	}
@@ -73,7 +73,7 @@ func (s *bscService) GetAccountTransactions(address string) ([]Transaction, erro
 
 }
 
-func synthesizeBSCUri(cfg config.BSC, address string) string {
+func synthesizeProviderUri(cfg config.Provider, address string) string {
 	return fmt.Sprintf("%s?module=%s&action=%s&address=%s&apikey=%s", cfg.BaseURI, cfg.Module, cfg.Action, address, cfg.ApiKey)
 }
 

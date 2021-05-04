@@ -12,12 +12,22 @@ apiKey = "API key generated in bscscan.com"
 rateLimit = 5
 rateLimitPeriod = "1s"
 
+[eth]
+baseUri = "https://api.etherscan.io/api"
+module = "account"
+action = "txlist"
+apiKey = "API key generated in ethscan.com"
+# if rate limit is set to 5 and rateLimitDuration is set to 1s this mean 5reqs/sec
+rateLimit = 5
+rateLimitPeriod = "1s"
+
 [binance]
 baseUri = "https://api.binance.com"
 candlesEndpoint = "/api/v3/klines"
 currentPriceEndpoint = "/api/v3/avgPrice"
 apiKey = "API key generated in binance.com"
-currencySymbol = "BNBUSDT"
+bnbusdCurrencySymbol = "BNBBUSD"
+ethusdCurrencySymbol = "ETHBUSD"
 # if rate limit is set to 1200 and rateLimitDuration is set to 1m this mean 1200reqs/min
 rateLimit = 1200
 rateLimitDuration = "1m"

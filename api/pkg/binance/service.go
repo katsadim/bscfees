@@ -12,8 +12,8 @@ import (
 )
 
 type RateGetter interface {
-	GetCurrencyRates(times []time.Time) (map[time.Time]float64, error)
-	GetLatestCurrencyRate() (float64, error)
+	GetCurrencyRates(times []time.Time, symbol string) (map[time.Time]float64, error)
+	GetLatestCurrencyRate(symbol string) (float64, error)
 }
 
 type binanceService struct {
@@ -27,12 +27,12 @@ func NewBinanceService(c http2.Client, cfg config.Binance) RateGetter {
 		cfg:    cfg}
 }
 
-func (bs *binanceService) GetCurrencyRates(times []time.Time) (map[time.Time]float64, error) {
+func (bs *binanceService) GetCurrencyRates(times []time.Time, symbol string) (map[time.Time]float64, error) {
 
 	res := make(map[time.Time]float64, len(times))
 
 	for i, t := range times {
-		rate, err := getCurrencyForTime(t, bs.cfg, bs.client)
+		rate, err := getCurrencyForTime(t, bs.cfg, bs.client, symbol)
 		if err != nil {
 			return map[time.Time]float64{}, fmt.Errorf("request #%d failed with err: %w", i, err)
 		}
@@ -42,8 +42,8 @@ func (bs *binanceService) GetCurrencyRates(times []time.Time) (map[time.Time]flo
 	return res, nil
 }
 
-func (bs *binanceService) GetLatestCurrencyRate() (float64, error) {
-	u, err := url.Parse(synthesizeCurrentPriceUri(bs.cfg))
+func (bs *binanceService) GetLatestCurrencyRate(symbol string) (float64, error) {
+	u, err := url.Parse(synthesizeCurrentPriceUri(bs.cfg, symbol))
 	if err != nil {
 		return 0.0, err
 	}
@@ -68,8 +68,8 @@ func (bs *binanceService) GetLatestCurrencyRate() (float64, error) {
 
 }
 
-func getCurrencyForTime(t time.Time, cfg config.Binance, client http2.Client) (float64, error) {
-	u, err := url.Parse(synthesizeCandlesUri(cfg, t))
+func getCurrencyForTime(t time.Time, cfg config.Binance, client http2.Client, symbol string) (float64, error) {
+	u, err := url.Parse(synthesizeCandlesUri(cfg, t, symbol))
 	if err != nil {
 		return 0.0, err
 	}
@@ -125,13 +125,13 @@ func pickNearestCandle(t time.Time, candles CandleSticks) CandleStick {
 	return ret
 }
 
-func synthesizeCandlesUri(cfg config.Binance, t time.Time) string {
+func synthesizeCandlesUri(cfg config.Binance, t time.Time, symbol string) string {
 	startTime := t.Add(-30*time.Second).UTC().UnixNano() / int64(time.Millisecond)
 	endTime := t.Add(30*time.Second).UTC().UnixNano() / int64(time.Millisecond)
 
-	return fmt.Sprintf("%s%s?symbol=%s&startTime=%d&endTime=%d&interval=1m", cfg.BaseURI, cfg.CandlesEndpoint, cfg.CurrencySymbol, startTime, endTime)
+	return fmt.Sprintf("%s%s?symbol=%s&startTime=%d&endTime=%d&interval=1m", cfg.BaseURI, cfg.CandlesEndpoint, symbol, startTime, endTime)
 }
 
-func synthesizeCurrentPriceUri(cfg config.Binance) string {
-	return fmt.Sprintf("%s%s?symbol=%s", cfg.BaseURI, cfg.CurrentPriceEndpoint, cfg.CurrencySymbol)
+func synthesizeCurrentPriceUri(cfg config.Binance, symbol string) string {
+	return fmt.Sprintf("%s%s?symbol=%s", cfg.BaseURI, cfg.CurrentPriceEndpoint, symbol)
 }

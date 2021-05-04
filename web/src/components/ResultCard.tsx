@@ -1,11 +1,13 @@
 import * as React from "react";
 import {FunctionComponent} from "react";
-import {Card, CardActions, CardContent, makeStyles, Typography} from "@material-ui/core";
+import {Card, CardActions, CardContent, Divider, makeStyles, Typography} from "@material-ui/core";
 import {DetailsPopover} from "./DetailsPopover";
 
 type Props = {
     bnbusdPrice: number
-    fees: number
+    ethusdPrice: number
+    bscFees: number
+    ethFees: number
     numOfDecimals: number
 }
 
@@ -21,15 +23,29 @@ export const ResultCard: FunctionComponent<Props> = (props: Props) => {
     return (
         <Card className={classes.root}>
             <CardContent>
-                <Typography variant="h5" component="h2">
-                    Fees in BNB: {props.fees.toFixed(props.numOfDecimals)}
+                <Typography variant="h6" component="h2">
+                    Bsc Fees: {props.bscFees.toFixed(props.numOfDecimals)}BNB
                 </Typography>
+                <Typography variant="h6" component="h2">
+                    Bsc Fees: {(props.bnbusdPrice * props.bscFees).toFixed(props.numOfDecimals)}$
+                </Typography>
+                <Divider/>
+                <Typography variant="h6" component="h2">
+                    Eth Fees: {props.ethFees.toFixed(props.numOfDecimals)}ETH
+                </Typography>
+                <Typography variant="h6" component="h2">
+                    Eth Fees: {(props.ethusdPrice * props.ethFees).toFixed(props.numOfDecimals)}$
+                </Typography>
+                <Divider/>
                 <Typography variant="h5" component="h2">
-                    Fees in USD: {(props.bnbusdPrice * props.fees).toFixed(props.numOfDecimals)}
+                    Grand Total: {(
+                    (props.bnbusdPrice * props.bscFees) +
+                    (props.ethusdPrice * props.ethFees)
+                ).toFixed(props.numOfDecimals)}
                 </Typography>
             </CardContent>
             <CardActions>
-                <DetailsPopover bnbusdPrice={props.bnbusdPrice}/>
+                <DetailsPopover bnbusdPrice={props.bnbusdPrice} ethusdPrice={props.ethusdPrice}/>
             </CardActions>
 
         </Card>

@@ -2,5 +2,7 @@ package pkg
 
 type Response struct {
 	BnbusdPrice float64 `json:"bnbusdPrice"`
-	Fees        float64 `json:"fees"`
+	EthusdPrice float64 `json:"ethusdPrice"`
+	BscFees     float64 `json:"bscFees"`
+	EthFees     float64 `json:"ethFees"`
 }

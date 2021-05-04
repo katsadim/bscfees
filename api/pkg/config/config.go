@@ -9,7 +9,8 @@ import (
 
 type Config struct {
 	HttpClient HTTPClient
-	Bsc        BSC
+	Bsc        Provider
+	Eth        Provider
 	Binance    Binance
 	Options    CalculatorOptions
 	General    GeneralOptions
@@ -20,7 +21,7 @@ type HTTPClient struct {
 	KeepAlive bool
 }
 
-type BSC struct {
+type Provider struct {
 	BaseURI           string
 	Module            string
 	Action            string
@@ -30,13 +31,14 @@ type BSC struct {
 }
 
 type Binance struct {
-	BaseURI              string
-	CandlesEndpoint      string
-	CurrentPriceEndpoint string
-	ApiKey               string
-	CurrencySymbol       string
-	RateLimit            int
-	RateLimitDuration    time.Duration
+	BaseURI               string
+	CandlesEndpoint       string
+	CurrentPriceEndpoint  string
+	ApiKey                string
+	BnbusdCurrencySymbol  string
+	EthusdCurrencySymbol  string
+	RateLimit             int
+	RateLimitDuration     time.Duration
 }
 
 type CalculatorOptions struct {

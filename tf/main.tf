@@ -292,9 +292,11 @@ resource "aws_api_gateway_method_settings" "settings" {
   stage_name  = aws_api_gateway_stage.stage.stage_name
 
   settings {
-    metrics_enabled    = true
-    logging_level      = "INFO"
-    data_trace_enabled = true
+    metrics_enabled        = true
+    logging_level          = "INFO"
+    data_trace_enabled     = true
+    throttling_rate_limit  = 5
+    throttling_burst_limit = 3
   }
 }
 

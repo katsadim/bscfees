@@ -36,6 +36,7 @@ jobs:
         terraform plan \
         -var="binance_api_key=${{ secrets.BINANCE_APIKEY }}" \
         -var="bscscan_api_key=${{ secrets.BSC_APIKEY }}" \
+        -var="ethscan_api_key=${{ secrets.ETH_APIKEY }}" \
         -var="aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" \
         -var="api_s3_bucket=${{ secrets.API_S3_BUCKET }}" \
         -var="web_s3_bucket=${{ secrets.WEB_S3_BUCKET }}"
@@ -46,6 +47,7 @@ jobs:
         terraform apply -auto-approve \
         -var="binance_api_key=${{ secrets.BINANCE_APIKEY }}" \
         -var="bscscan_api_key=${{ secrets.BSC_APIKEY }}" \
+        -var="ethscan_api_key=${{ secrets.ETH_APIKEY }}" \
         -var="aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" \
         -var="api_s3_bucket=${{ secrets.API_S3_BUCKET }}" \
         -var="web_s3_bucket=${{ secrets.WEB_S3_BUCKET }}"

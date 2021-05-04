@@ -33,6 +33,11 @@ variable "binance_api_key" {
   type        = string
 }
 
+variable "ethscan_api_key" {
+  description = "Ethereum Developer API key (ethscan.com)"
+  type        = string
+}
+
 variable "web_s3_bucket" {
   description = "The S3 bucket that hosts the web code"
   type        = string

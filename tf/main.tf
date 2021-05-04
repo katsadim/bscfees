@@ -78,6 +78,7 @@ resource "aws_lambda_function" "bsc_fees" {
       GENERAL_ENV    = "prod"
       BINANCE_APIKEY = var.binance_api_key
       BSC_APIKEY     = var.bscscan_api_key
+      ETH_APIKEY     = var.ethscan_api_key
     }
   }
 

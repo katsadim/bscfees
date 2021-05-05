@@ -7,6 +7,7 @@
 [![API](https://github.com/katsadim/bscfees/workflows/API/badge.svg)](https://github.com/katsadim/bscfees/workflows/API/badge.svg) 
 [![WEB](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg)](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg) 
 [![Terraform](https://github.com/katsadim/bscfees/workflows/TF/badge.svg)](https://github.com/katsadim/bscfees/workflows/TF/badge.svg) 
+[![Go Report Card](https://goreportcard.com/badge/github.com/katsadim/bscfees)](https://goreportcard.com/report/github.com/katsadim/bscfees)
 
 Are you tired of manually going over your trades in [BscScan](https://bscscan.com/) and [Etherscan](https://etherscan.com) 
 to calculate your transaction fees?
@@ -40,4 +41,3 @@ This repository hosts the bits and pieces that make BscFees a reality:
 * Show final fees price based on the bnb/busd currency rate at the exact time the transaction completed.
 * Support other currencies (eg EUR)
 * Support of more than 10000 transactions (bots)
-

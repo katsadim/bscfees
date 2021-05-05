@@ -20,7 +20,6 @@ type NormalTx struct {
 	BlockNumber       int    `json:"blockNumber,string"`
 	TimeStamp         Time   `json:"timeStamp"`
 	Hash              string `json:"hash"`
-	Nonce             int    `json:"nonce,string"`
 	BlockHash         string `json:"blockHash"`
 	TransactionIndex  int    `json:"transactionIndex,string"`
 	From              string `json:"from"`

@@ -7,9 +7,10 @@
 [![WEB](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg)](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg) 
 [![Terraform](https://github.com/katsadim/bscfees/workflows/TF/badge.svg)](https://github.com/katsadim/bscfees/workflows/TF/badge.svg) 
 
-Are you tired of manually going over your trades in [BscScan](https://bscscan.com/) to calculate your transaction fees?
+Are you tired of manually going over your trades in [BscScan](https://bscscan.com/) and [Etherscan](https://etherscan.com) 
+to calculate your transaction fees?
 
-[BscFees](https://bscfees.com) is your go-to place when it comes to Binance Safe Chain fees calculation!
+[BscFees](https://bscfees.com) is your go-to place when it comes to Binance Safe Chain and Ethereum Blockchain fees calculation!
 
 <p align="center">
   <img src="/res/site.webp">
@@ -23,7 +24,7 @@ Just input the wallet address and BscFees will:
 * iterate over all your transactions and sum your fees
 * multiply the above two values
 
-And there you have it! The sum of fees you have paid for Bsc transactions right in front of your pretty eyes! 
+And there you have it! The sum of fees you have paid for Bsc and Eth transactions right in front of your pretty eyes! 
 
 ## Repo contents
 
@@ -35,7 +36,7 @@ This repository hosts the bits and pieces that make BscFees a reality:
 
 ## Future work
 
-* Support of ETH
 * Show final fees price based on the bnb/busd currency rate at the exact time the transaction completed.
 * Support other currencies (eg EUR)
+* Support of more than 10000 transactions (bots)
 

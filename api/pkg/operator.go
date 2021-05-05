@@ -2,8 +2,8 @@ package pkg
 
 import (
 	"bsc-fees/pkg/binance"
-	"bsc-fees/pkg/eth"
 	"bsc-fees/pkg/config"
+	"bsc-fees/pkg/eth"
 	"bsc-fees/pkg/net"
 	"context"
 	"fmt"
@@ -99,6 +99,8 @@ func (o *operator) Calculate(account string) (Response, error) {
 		}
 	}
 
+	err = determineError(bscFees, ethFees, bnbusdCurrentRate, ethusdCurrentRate, err)
+
 	if err != nil {
 		return Response{}, err
 	}
@@ -139,4 +141,23 @@ func GetLatestCurrencyRate(o *operator, symbol string) (float64, error) {
 		return 0, fmt.Errorf("something went terribly wrong with Binance networking: %w", err)
 	}
 	return currentRate, nil
+}
+
+// Sometimes a wallet might be valid for eth but not for bsc and vice versa.
+// Therefore we need to be resilient in such cases.
+// Maybe a smarter way would be more appropriate here such as better design in channels and go routines
+func determineError(bscFees float64, ethFees float64, bnbusdRate float64, ethusdRate float64, err error) error {
+	if err == nil {
+		return nil
+	}
+
+	if bnbusdRate == 0 || ethusdRate == 0 {
+		return fmt.Errorf("could not determine currency rates: %w", err)
+	}
+
+	if bscFees == 0 && ethFees == 0 {
+		return fmt.Errorf("could not determine fees: %w", err)
+	}
+
+	return nil
 }

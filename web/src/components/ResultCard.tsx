@@ -41,7 +41,7 @@ export const ResultCard: FunctionComponent<Props> = (props: Props) => {
                     Grand Total: {(
                     (props.bnbusdPrice * props.bscFees) +
                     (props.ethusdPrice * props.ethFees)
-                ).toFixed(props.numOfDecimals)}
+                ).toFixed(props.numOfDecimals)}$
                 </Typography>
             </CardContent>
             <CardActions>

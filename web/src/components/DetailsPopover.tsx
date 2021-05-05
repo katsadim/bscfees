@@ -51,8 +51,8 @@ export const DetailsPopover: FunctionComponent<Props> = (props: Props) => {
                     horizontal: 'center',
                 }}
             >
-                <Typography className={classes.typography}>Current BNB/BUSD price: {props.bnbusdPrice}</Typography>
-                <Typography className={classes.typography}>Current ETH/BUSD price: {props.ethusdPrice}</Typography>
+                <Typography className={classes.typography}>Current BNB/BUSD rate: {props.bnbusdPrice}</Typography>
+                <Typography className={classes.typography}>Current ETH/BUSD rate: {props.ethusdPrice}</Typography>
             </Popover>
         </div>
 

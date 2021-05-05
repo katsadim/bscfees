@@ -2,7 +2,8 @@
 
 ## Intro
 
-[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/bscfees/bscfees) 
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/bscfees/bscfees) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkatsadim%2Fbscfees.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkatsadim%2Fbscfees?ref=badge_shield)
+
 [![codecov](https://codecov.io/gh/katsadim/bscfees/branch/main/graph/badge.svg)](https://codecov.io/gh/katsadim/bscfees)
 [![API](https://github.com/katsadim/bscfees/workflows/API/badge.svg)](https://github.com/katsadim/bscfees/workflows/API/badge.svg) 
 [![WEB](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg)](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg) 
@@ -41,3 +42,7 @@ This repository hosts the bits and pieces that make BscFees a reality:
 * Support other currencies (eg EUR)
 * Support of more than 10000 transactions (bots)
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkatsadim%2Fbscfees.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkatsadim%2Fbscfees?ref=badge_large)

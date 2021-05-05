@@ -15,4 +15,3 @@ type CurrentAveragePrice struct {
 	Mins  int     `json:"mins"`
 	Price float64 `json:"price,string"`
 }
-

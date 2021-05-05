@@ -3,6 +3,7 @@
 ## Intro
 
 [![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/bscfees/bscfees) 
+[![codecov](https://codecov.io/gh/katsadim/bscfees/branch/main/graph/badge.svg)](https://codecov.io/gh/katsadim/bscfees)
 [![API](https://github.com/katsadim/bscfees/workflows/API/badge.svg)](https://github.com/katsadim/bscfees/workflows/API/badge.svg) 
 [![WEB](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg)](https://github.com/katsadim/bscfees/workflows/WEB/badge.svg) 
 [![Terraform](https://github.com/katsadim/bscfees/workflows/TF/badge.svg)](https://github.com/katsadim/bscfees/workflows/TF/badge.svg) 

@@ -26,10 +26,28 @@ type operator struct {
 
 func NewOperator(ctx context.Context, cfg config.Config) Operator {
 	bscClient := net.NewClient(cfg)
+	ethClient := net.NewClient(cfg)
 	binanceClient := net.NewClient(cfg)
 	bscService := eth.NewProviderService(bscClient, cfg.Bsc)
-	ethService := eth.NewProviderService(bscClient, cfg.Eth)
+	ethService := eth.NewProviderService(ethClient, cfg.Eth)
 	binanceService := binance.NewBinanceService(binanceClient, cfg.Binance)
+	calculator := NewCalculator(cfg.Options)
+	return &operator{
+		ctx:            ctx,
+		cfg:            &cfg,
+		bscService:     bscService,
+		ethService:     ethService,
+		binanceService: binanceService,
+		calculator:     calculator,
+	}
+}
+
+func NewManualOperator(
+	ctx context.Context,
+	cfg config.Config,
+	bscService eth.TxGetter,
+	ethService eth.TxGetter,
+	binanceService binance.RateGetter) Operator {
 	calculator := NewCalculator(cfg.Options)
 	return &operator{
 		ctx:            ctx,

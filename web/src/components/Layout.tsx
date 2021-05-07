@@ -35,9 +35,9 @@ const Copyright: FunctionComponent = () => {
             <Grid container item justifyContent="center" alignItems={"flex-start"} alignContent={"center"}>
                 <Grid item/>
                 <Grid item>
-                    <Tooltip title="EthScan">
-                        <OutboundLink href="https://www.ethscan.com">
-                            <IconButton aria-label="ethscan" onClick={() => window.open('https://www.ethscan.com')}>
+                    <Tooltip title="EtherScan">
+                        <OutboundLink href="https://www.etherscan.io">
+                            <IconButton aria-label="etherscan" onClick={() => window.open('https://www.etherscan.io')}>
                                 <EthScanIcon width={20} height={20} style={{fontSize: 10}}/>
                             </IconButton>
                         </OutboundLink>

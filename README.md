@@ -9,7 +9,7 @@
 [![Terraform](https://github.com/katsadim/bscfees/workflows/TF/badge.svg)](https://github.com/katsadim/bscfees/workflows/TF/badge.svg) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/katsadim/bscfees)](https://goreportcard.com/report/github.com/katsadim/bscfees)
 
-Are you tired of manually going over your trades in [BscScan](https://bscscan.com/) and [Etherscan](https://etherscan.com) 
+Are you tired of manually going over your trades in [BscScan](https://bscscan.com/) and [Etherscan](https://etherscan.io) 
 to calculate your transaction fees?
 
 [BscFees](https://bscfees.com) is your go-to place when it comes to Binance Safe Chain and Ethereum Blockchain fees calculation!

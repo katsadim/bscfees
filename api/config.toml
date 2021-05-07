@@ -7,7 +7,7 @@ keepAlive = true
 baseUri = "https://api.bscscan.com/api"
 module = "account"
 action = "txlist"
-apiKey = "API key generated in bscscan.com"
+apiKey = "BZEXHK2GFWU5PPAFZJ8MWQ1H4UFMPNYB8Y"
 # if rate limit is set to 5 and rateLimitDuration is set to 1s this mean 5reqs/sec
 rateLimit = 5
 rateLimitPeriod = "1s"
@@ -16,7 +16,7 @@ rateLimitPeriod = "1s"
 baseUri = "https://api.etherscan.io/api"
 module = "account"
 action = "txlist"
-apiKey = "API key generated in ethscan.com"
+apiKey = "SP2WTJK2N15RQRR2AJC58SGGT58FDDZBUD"
 # if rate limit is set to 5 and rateLimitDuration is set to 1s this mean 5reqs/sec
 rateLimit = 5
 rateLimitPeriod = "1s"
@@ -25,7 +25,7 @@ rateLimitPeriod = "1s"
 baseUri = "https://api.binance.com"
 candlesEndpoint = "/api/v3/klines"
 currentPriceEndpoint = "/api/v3/avgPrice"
-apiKey = "API key generated in binance.com"
+apiKey = "RX3KCdKk4gn095ljB1UJoezVL7OdUo9LeqEdeX7JySk7MKLkQHNN5VWMOC4Or8ek"
 bnbusdCurrencySymbol = "BNBBUSD"
 ethusdCurrencySymbol = "ETHBUSD"
 # if rate limit is set to 1200 and rateLimitDuration is set to 1m this mean 1200reqs/min

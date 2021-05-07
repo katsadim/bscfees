@@ -34,7 +34,7 @@ variable "binance_api_key" {
 }
 
 variable "ethscan_api_key" {
-  description = "Ethereum Developer API key (ethscan.com)"
+  description = "Ethereum Developer API key (etherscan.io)"
   type        = string
 }
 

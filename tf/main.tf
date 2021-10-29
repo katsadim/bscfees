@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.15.0"
+  required_version = "~> 1.0.10"
 
   backend "s3" {
     bucket = "bscfeestfstate"
@@ -55,8 +55,8 @@ resource "aws_s3_bucket" "bsc_fees_api" {
   tags = local.tags
 }
 
-// This is a dummy executbalke that needs to be uploads for the lambda to work.
-// It is meanth to be overwritten
+// This is a dummy executable that needs to be uploaded for the lambda to work.
+// It is meant to be overwritten
 resource "aws_s3_bucket_object" "file_upload" {
   bucket = aws_s3_bucket.bsc_fees_api.id
   key    = var.api_zip_name

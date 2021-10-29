@@ -24,6 +24,20 @@ type operator struct {
 	calculator     Calculator
 }
 
+type currencyType int
+
+const (
+	bscFees = iota
+	ethFees
+	bnbusd
+	ethusd
+)
+
+type price struct {
+	value   float64
+	curType currencyType
+}
+
 func NewOperator(ctx context.Context, cfg config.Config) Operator {
 	bscClient := net.NewClient(cfg)
 	ethClient := net.NewClient(cfg)
@@ -60,10 +74,7 @@ func NewManualOperator(
 }
 
 func (o *operator) Calculate(account string) (Response, error) {
-	bscFeesCh := make(chan float64)
-	ethFeesCh := make(chan float64)
-	bnbusdCurrRateCh := make(chan float64)
-	ethusdCurrRateCh := make(chan float64)
+	currencyCh := make(chan price)
 	errorCh := make(chan error, concurrentRoutinesNum)
 
 	go func() {
@@ -72,7 +83,10 @@ func (o *operator) Calculate(account string) (Response, error) {
 			errorCh <- err
 			return
 		}
-		bscFeesCh <- fees
+		currencyCh <- price{
+			value:   fees,
+			curType: bscFees,
+		}
 	}()
 
 	go func() {
@@ -81,53 +95,70 @@ func (o *operator) Calculate(account string) (Response, error) {
 			errorCh <- err
 			return
 		}
-		ethFeesCh <- fees
+		currencyCh <- price{
+			value:   fees,
+			curType: ethFees,
+		}
 	}()
 
 	go func() {
-		currentRate, err := GetLatestCurrencyRate(o, o.cfg.Binance.BnbusdCurrencySymbol)
+		currencyRate, err := GetLatestCurrencyRate(o, o.cfg.Binance.BnbusdCurrencySymbol)
 		if err != nil {
 			errorCh <- err
 			return
 		}
-		bnbusdCurrRateCh <- currentRate
+		currencyCh <- price{
+			value:   currencyRate,
+			curType: bnbusd,
+		}
 	}()
 
 	go func() {
-		currentRate, err := GetLatestCurrencyRate(o, o.cfg.Binance.EthusdCurrencySymbol)
+		currencyRate, err := GetLatestCurrencyRate(o, o.cfg.Binance.EthusdCurrencySymbol)
 		if err != nil {
 			errorCh <- err
 			return
 		}
-		ethusdCurrRateCh <- currentRate
+		currencyCh <- price{
+			value:   currencyRate,
+			curType: ethusd,
+		}
 	}()
 
-	var bscFees float64
-	var ethFees float64
-	var bnbusdCurrentRate float64
-	var ethusdCurrentRate float64
+	var bscFeesPrice float64
+	var ethFeesPrice float64
+	var bnbusdCurrencyRate float64
+	var ethusdCurrencyRate float64
+	var c price
 	var err error
 	for i := 0; i < concurrentRoutinesNum; i++ {
 		select {
-		case bscFees = <-bscFeesCh:
-		case ethFees = <-ethFeesCh:
-		case bnbusdCurrentRate = <-bnbusdCurrRateCh:
-		case ethusdCurrentRate = <-ethusdCurrRateCh:
+		case c = <-currencyCh:
+			switch c.curType {
+			case bnbusd:
+				bnbusdCurrencyRate = c.value
+			case ethusd:
+				ethusdCurrencyRate = c.value
+			case bscFees:
+				bscFeesPrice = c.value
+			case ethFees:
+				ethFeesPrice = c.value
+			}
 		case err = <-errorCh:
 		}
 	}
 
-	err = determineError(bscFees, ethFees, bnbusdCurrentRate, ethusdCurrentRate, err)
+	err = determineError(bscFeesPrice, ethFeesPrice, bnbusdCurrencyRate, ethusdCurrencyRate, err)
 
 	if err != nil {
 		return Response{}, err
 	}
 
 	return Response{
-		BnbusdPrice: bnbusdCurrentRate,
-		EthusdPrice: ethusdCurrentRate,
-		BscFees:     bscFees,
-		EthFees:     ethFees,
+		BnbusdPrice: bnbusdCurrencyRate,
+		EthusdPrice: ethusdCurrencyRate,
+		BscFees:     bscFeesPrice,
+		EthFees:     ethFeesPrice,
 	}, nil
 }
 

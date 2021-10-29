@@ -157,8 +157,8 @@ func (o *operator) Calculate(account string) (Response, error) {
 	return Response{
 		BnbusdPrice: bnbusdCurrencyRate,
 		EthusdPrice: ethusdCurrencyRate,
-		BscFees:     bscFees,
-		EthFees:     ethFees,
+		BscFees:     bscFeesPrice,
+		EthFees:     ethFeesPrice,
 	}, nil
 }
 

@@ -1,5 +1,7 @@
 package eth
 
+//go:generate mockgen -source=service.go -destination service_mock.go -package eth
+
 import (
 	"bsc-fees/pkg/config"
 	"bsc-fees/pkg/net"

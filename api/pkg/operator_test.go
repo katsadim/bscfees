@@ -6,17 +6,18 @@ import (
 	"bsc-fees/pkg/eth"
 	"context"
 	"fmt"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
 	"math/big"
 	"testing"
 	"time"
 )
 
 func Test_operator_Calculate(t *testing.T) {
-
 	type fields struct {
-		bscService     eth.TxGetter
-		ethService     eth.TxGetter
-		binanceService binance.RateGetter
+		bscServiceError     bool
+		ethServiceError     bool
+		binanceServiceError bool
 	}
 	tests := []struct {
 		name    string
@@ -24,34 +25,34 @@ func Test_operator_Calculate(t *testing.T) {
 		wantErr bool
 	}{
 		{"everything went wrong", fields{
-			bscService:     new(erroneousTxGetter),
-			ethService:     new(erroneousTxGetter),
-			binanceService: new(erroneousRateGetter),
+			bscServiceError:     true,
+			ethServiceError:     true,
+			binanceServiceError: true,
 		}, true},
 		{"Symbol rate failed", fields{
-			bscService:     new(successfulTxGetter),
-			ethService:     new(successfulTxGetter),
-			binanceService: new(erroneousRateGetter),
+			bscServiceError:     false,
+			ethServiceError:     false,
+			binanceServiceError: true,
 		}, true},
 		{"Both eth and bsc services failed", fields{
-			bscService:     new(erroneousTxGetter),
-			ethService:     new(erroneousTxGetter),
-			binanceService: new(successfulRateGetter),
+			bscServiceError:     true,
+			ethServiceError:     true,
+			binanceServiceError: false,
 		}, true},
 		{"Only bsc service failed", fields{
-			bscService:     new(erroneousTxGetter),
-			ethService:     new(successfulTxGetter),
-			binanceService: new(successfulRateGetter),
+			bscServiceError:     true,
+			ethServiceError:     false,
+			binanceServiceError: false,
 		}, false},
 		{"Only eth service failed", fields{
-			bscService:     new(successfulTxGetter),
-			ethService:     new(erroneousTxGetter),
-			binanceService: new(successfulRateGetter),
+			bscServiceError:     false,
+			ethServiceError:     true,
+			binanceServiceError: false,
 		}, false},
 		{"Everything went according to the plan!", fields{
-			bscService:     new(successfulTxGetter),
-			ethService:     new(successfulTxGetter),
-			binanceService: new(successfulRateGetter),
+			bscServiceError:     false,
+			ethServiceError:     false,
+			binanceServiceError: false,
 		}, false},
 	}
 
@@ -62,56 +63,58 @@ func Test_operator_Calculate(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+
+			mockCtrl := gomock.NewController(t)
+			mockBscTxGetter := eth.NewMockTxGetter(mockCtrl)
+			setupTxGetterMock(mockBscTxGetter, tt.fields.bscServiceError)
+
+			mockEthTxGetter := eth.NewMockTxGetter(mockCtrl)
+			setupTxGetterMock(mockEthTxGetter, tt.fields.ethServiceError)
+
+			mockRateGetter := binance.NewMockRateGetter(mockCtrl)
+			setupRateGetterMock(mockRateGetter, tt.fields.binanceServiceError)
+
 			o := NewManualOperator(
 				context.Background(),
 				cfg,
-				tt.fields.bscService,
-				tt.fields.ethService,
-				tt.fields.binanceService)
+				mockBscTxGetter,
+				mockEthTxGetter,
+				mockRateGetter)
 			_, err := o.Calculate("0x000000000000000000000000000000000000000000")
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Calculate() error = %v, wantErr %v", err, tt.wantErr)
+				assert.Fail(t, "Calculate() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+			mockCtrl.Finish()
 		})
 	}
 }
 
-type erroneousTxGetter struct {
-}
-
-func (e *erroneousTxGetter) GetAccountTransactions(address string) ([]eth.Transaction, error) {
-	return nil, fmt.Errorf("there was an error")
-}
-
-type successfulTxGetter struct {
-}
-
-func (s *successfulTxGetter) GetAccountTransactions(address string) ([]eth.Transaction, error) {
-	txs := []eth.Transaction{
-		{Time: time.Now(), GasPrice: *big.NewInt(12), GasUsed: 14},
+func setupTxGetterMock(m *eth.MockTxGetter, returnError bool) {
+	if returnError {
+		m.EXPECT().
+			GetAccountTransactions(gomock.Any()).
+			Return(nil, fmt.Errorf("there was an error"))
+	} else {
+		txs := []eth.Transaction{
+			{Time: time.Now(), GasPrice: *big.NewInt(12), GasUsed: 14},
+		}
+		m.EXPECT().
+			GetAccountTransactions(gomock.Any()).
+			Return(txs, nil)
 	}
-	return txs, nil
 }
 
-type erroneousRateGetter struct {
-}
-
-func (e *erroneousRateGetter) GetCurrencyRates(times []time.Time, symbol string) (map[time.Time]float64, error) {
-	return nil, fmt.Errorf("there was an error")
-}
-
-func (e *erroneousRateGetter) GetLatestCurrencyRate(symbol string) (float64, error) {
-	return 0, fmt.Errorf("there was an error")
-}
-
-type successfulRateGetter struct {
-}
-
-func (s *successfulRateGetter) GetCurrencyRates(times []time.Time, symbol string) (map[time.Time]float64, error) {
-	return map[time.Time]float64{}, nil
-}
-
-func (s *successfulRateGetter) GetLatestCurrencyRate(symbol string) (float64, error) {
-	return 15, nil
+func setupRateGetterMock(m *binance.MockRateGetter, returnError bool) {
+	if returnError {
+		m.EXPECT().
+			GetLatestCurrencyRate(gomock.Any()).
+			Return(0.0, fmt.Errorf("there was an error")).
+			Times(2)
+	} else {
+		m.EXPECT().
+			GetLatestCurrencyRate(gomock.Any()).
+			Return(15.0, nil).
+			Times(2)
+	}
 }

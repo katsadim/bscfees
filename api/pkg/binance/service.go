@@ -1,5 +1,7 @@
 package binance
 
+//go:generate mockgen -source=service.go -destination service_mock.go -package binance
+
 import (
 	"bsc-fees/pkg/config"
 	http2 "bsc-fees/pkg/net"

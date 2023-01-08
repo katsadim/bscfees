@@ -22,7 +22,7 @@ rateLimit = 5
 rateLimitPeriod = "1s"
 
 [binance]
-baseUri = "https://api.binance.us"
+baseUri = "https://api.binance.us" 
 candlesEndpoint = "/api/v3/klines"
 currentPriceEndpoint = "/api/v3/avgPrice"
 apiKey = "RX3KCdKk4gn095ljB1UJoezVL7OdUo9LeqEdeX7JySk7MKLkQHNN5VWMOC4Or8ek"
